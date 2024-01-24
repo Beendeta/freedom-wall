@@ -33,11 +33,11 @@ document.addEventListener("DOMContentLoaded", function () {
         context.beginPath();
     }
 
-   window.submitMessage = function () {
+       window.submitMessage = function () {
         const message = messageInput.value.trim();
 
         if (message !== "") {
-            fetch('https://your-server-endpoint.com/submit-message', {
+            fetch('http://localhost:3000/submit-message', {  // Update the URL with your server's URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
