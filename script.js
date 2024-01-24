@@ -33,14 +33,31 @@ document.addEventListener("DOMContentLoaded", function () {
         context.beginPath();
     }
 
-    window.submitMessage = function () {
+   window.submitMessage = function () {
         const message = messageInput.value.trim();
 
         if (message !== "") {
-            // Here you can implement the logic to send the message to your server or handle it as needed
-            console.log("Message submitted:", message);
-            messageInput.value = "";
-            context.clearRect(0, 0, canvas.width, canvas.height);
+            fetch('https://your-server-endpoint.com/submit-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Message submitted:', data);
+                messageInput.value = "";
+                context.clearRect(0, 0, canvas.width, canvas.height);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
         } else {
             alert("Please enter a message before submitting.");
         }
